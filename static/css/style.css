@@ -1,0 +1,41 @@
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 60px;
+  background-color: #ccc;
+}
+
+
+/* Custom page CSS
+-------------------------------------------------- */
+.form-control.chat{
+	display: inline-block;
+	width: 75%;
+}
+footer form{
+	padding-top: 10px;
+}
+.chat .list-group-item{
+  float: left;
+  width: 25%;
+  height: 70px;
+  margin: 5px;
+  padding:  8px;
+}
+.chats{
+/*	border: 1px solid #ccc;
+	padding: 10px;*/
+}

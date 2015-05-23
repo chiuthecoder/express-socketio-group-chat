@@ -1,0 +1,78 @@
+<html>
+<head>
+	<title>Group Chat</title>
+	<link rel="stylesheet" href="/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/css/style.css">
+	<script src="/js/jquery.js"></script>
+	<script type ="text/javascript" src="/socket.io/socket.io.js"></script>
+	<script type ="text/javascript">
+		$(document).ready(function (){
+			var socket = io.connect();
+			var userName = prompt("What's your name?");
+			console.log(userName);
+			$('.lucky').html(userName);
+			$('form.user').submit(function(){
+					socket.emit("posting_user", {
+						user: $('#user').val()
+					});
+					user = $('#user').val();
+					return false;	
+			});
+			$('form.msg').submit(function(){
+					socket.emit("posting_form", {
+						name: userName,
+						message: $('#message').val()
+					});
+					$('#message').val("");
+					return false;	
+			});
+			socket.on('updated_user', function(data){
+				$('.chats').append('<p">'+ data.user +'</p>');
+			});	
+			socket.on('updated_message', function(data){
+				// console.log(data.id);
+				// $('.chats').append('<p">'+ data.socket.id +'</p>');
+				$('.chats').append('<div class="col-md-1">'+ data.name +'</div>');
+				$('.chats').append('<div class="col-md-11">'+ data.message +'</div>');
+			});
+		
+		});
+	</script>
+</head>
+<body>
+	<div class="box"></div>
+	<div class="container">
+	  <div class="page-header">
+	    <h1>Group Chat</h1>
+	  </div>
+	  <p class="lead">Welcome to Socket.io Broadcast Group Chat</p>
+      <div class="chats container">
+
+			</div>
+	</div>
+	<footer class="footer">
+	  <div class="container">
+	  <div class="col-md-10">
+<!-- 			<form class="user">
+			  <div class="form-group">
+			    <input type="text" class="form-control chat" id="user" name="name" placeholder="Your Name">
+			    <button type="submit" class="btn btn-default">Cancel</button>
+			    <button type="submit" class="btn btn-default">Submit</button>
+			  </div>
+			</form> -->
+			<form class="msg">
+			  <div class="form-group">
+			  	<input type="hidden" id="addName" name="name" value="">
+			    <input type="text" class="form-control chat" id="message" name="message" placeholder="Enter your message here">
+			    <button type="submit" class="btn btn-default">Submit</button>
+			  </div>
+			</form>
+	  </div>
+	  <div class="col-md-2">
+	  	<div class="lucky"></div>
+	  </div>
+		</div>
+	</footer>
+
+</body>
+</html>
